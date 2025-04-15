@@ -52,16 +52,14 @@ class SalaryController extends Controller
     public function showsalarydata(Request $request)
     {
         if ($request->ajax()) {
-            $salaries = Salary::with('employee.branch'); // Eager load the branch relationship
+            $salaries = Salary::with('employee.branch');
     
-            // Filter by employee name
             if ($request->has('employee_name') && !empty($request->employee_name)) {
                 $salaries->whereHas('employee', function ($query) use ($request) {
                     $query->where('name', 'like', '%' . $request->employee_name . '%');
                 });
             }
     
-            // Filter by employee branch if provided
             if ($request->has('employee_branch') && !empty($request->employee_branch)) {
                 $salaries->whereHas('employee', function ($query) use ($request) {
                     $query->whereHas('branch', function ($query) use ($request) {
@@ -70,13 +68,12 @@ class SalaryController extends Controller
                 });
             }
     
-            // DataTables response
             return DataTables::of($salaries)
                 ->addColumn('employee_name', function ($salary) {
                     return $salary->employee->name ?? 'N/A';
                 })
                 ->addColumn('employee_branch', function ($salary) {
-                    return $salary->employee->branch->branch_name ?? 'N/A';  // Access only branch_name from the related branch model
+                    return $salary->employee->branch->branch_name ?? 'N/A';  
                 })
                 ->filterColumn('employee_name', function ($query, $keyword) {
                     $query->whereHas('employee', function ($q) use ($keyword) {
