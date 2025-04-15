@@ -37,10 +37,7 @@
       <!-- Content -->
       <main class="flex-1 overflow-y-auto p-6">
         <!-- Filters -->
-        <div class="flex space-x-4 mb-4">
-          <input type="text" id="employeeFilter" placeholder="Filter by Employee Name" class="p-2 border rounded" />
-          <input type="text" id="branchFilter" placeholder="Filter by Branch" class="p-2 border rounded" />
-        </div>
+        
 
         <!-- Data Table -->
         <table class="display" id="salaryTable" style="width: 100%;">
@@ -121,6 +118,6 @@
         table.draw();
     });
 });
-  
+
 </script>
 </html>
